@@ -4,6 +4,6 @@ module IPLogic
   LIB = File.expand_path(File.dirname(__FILE__))
 end
 
-Dir.glob(File.join(LIB, '**', '*.rb')).each do |f|
-  require f
-end
+require File.join(IPLogic::LIB, 'core_ext')
+require File.join(IPLogic::LIB, 'ip_logic', 'ip')
+require File.join(IPLogic::LIB, 'ip_logic', 'cidr')

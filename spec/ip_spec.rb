@@ -1,3 +1,5 @@
+require File.join(File.dirname(__FILE__), 'spec_helper')
+
 describe IP do
   it "parses a string" do
     ip = IP('11.22.33.44')

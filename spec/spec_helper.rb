@@ -1,10 +1,11 @@
+require 'rubygems'
+require 'spec'
+
 require File.expand_path(File.join(
   File.dirname(__FILE__),
   '..',
   'lib',
-  'ip'
+  'ip_logic'
 ))
 
-Spec::Runner.configure do |config|
-  config.include IPLogic
-end
+include IPLogic
