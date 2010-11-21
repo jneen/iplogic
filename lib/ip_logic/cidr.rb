@@ -54,7 +54,7 @@ module IPLogic
     end
 
     def inspect
-      "#<IPLogic::CIDR [ #{ip}/#{bits} ]>"
+      "#<CIDR [ #{ip}/#{bits} ]>"
     end
 
     def netmask

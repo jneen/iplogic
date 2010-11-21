@@ -90,7 +90,7 @@ module IPLogic
     alias to_str to_s
 
     def inspect
-      "#<IPLogic::IP [ #{self} ]>"
+      "#<IP [ #{self} ]>"
     end
 
     def eql?(other)
