@@ -45,7 +45,7 @@ module IPLogic
     end
 
     ALL = self.new(0,0)
-    def all
+    def self.all
       ALL
     end
 
