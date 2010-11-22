@@ -5,5 +5,5 @@ module IPLogic
 end
 
 require File.join(IPLogic::LIB, 'core_ext')
-require File.join(IPLogic::LIB, 'ip_logic', 'ip')
-require File.join(IPLogic::LIB, 'ip_logic', 'cidr')
+require File.join(IPLogic::LIB, 'iplogic', 'ip')
+require File.join(IPLogic::LIB, 'iplogic', 'cidr')
