@@ -31,7 +31,7 @@ module IPLogic
       # >> ip.object_id == IP(ip).object_id
       # => true
       #   
-      def parse(arg)
+      def wrap(arg)
         return arg if arg.is_a? IP
 
         int = case arg
@@ -145,6 +145,6 @@ module IPLogic
 
   def IP(*args)
     return IP if args.empty?
-    IP.parse(args.first)
+    IP.wrap(args.first)
   end
 end

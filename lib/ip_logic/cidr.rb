@@ -3,7 +3,7 @@ module IPLogic
     include Enumerable
 
     class << self
-      def parse(*args)
+      def wrap(*args)
         return args.first if args.first.is_a? CIDR
         if args.size == 2
           ip, bits = args
@@ -103,6 +103,6 @@ module IPLogic
   def CIDR(*args)
     return CIDR if args.empty?
 
-    CIDR.parse(*args)
+    CIDR.wrap(*args)
   end
 end
