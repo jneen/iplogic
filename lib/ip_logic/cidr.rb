@@ -92,7 +92,7 @@ module IPLogic
     end
 
     def zone
-      i.parts[0..-(1+significant_octets)].reverse.join('.')
+      ip.parts[0..-(1+significant_octets)].reverse.join('.')
     end
 
     def each(&blk)
