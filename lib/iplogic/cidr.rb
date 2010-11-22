@@ -12,7 +12,7 @@ module IPLogic
           when Integer
             bits
           when String
-            netmask_to_bits(IP(bits))
+            netmask_to_bits(IP.wrap(bits))
           when IP
             netmask_to_bits(bits)
           else
@@ -41,7 +41,7 @@ module IPLogic
 
     def initialize(ip, bits)
       @bits = bits.to_i
-      @ip = IP(ip)
+      @ip = IP.wrap(ip)
     end
 
     ALL = self.new(0,0)
@@ -58,7 +58,7 @@ module IPLogic
     end
 
     def netmask
-      @netmask ||= IP(
+      @netmask ||= IP.wrap(
         ((1 << bits) - 1) << (32 - bits)
       )
     end
@@ -68,7 +68,7 @@ module IPLogic
     end
 
     def min
-      @min ||= IP(
+      @min ||= IP.wrap(
         (ip.to_i >> inv_bits) << inv_bits
       )
     end

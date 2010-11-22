@@ -116,16 +116,16 @@ module IPLogic
     end
 
     def prefix(netmask)
-      CIDR(self, netmask).min
+      CIDR.wrap(self, netmask).min
     end
     alias min prefix
 
     def max(netmask)
-      CIDR(self, netmask).max
+      CIDR.wrap(self, netmask).max
     end
 
     def rest_field(netmask)
-      CIDR(self, netmask).rest_field
+      CIDR.wrap(self, netmask).rest_field
     end
     alias rest rest_field
 
