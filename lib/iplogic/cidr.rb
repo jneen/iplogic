@@ -54,7 +54,7 @@ module IPLogic
     end
 
     def inspect
-      "#<CIDR [ #{ip}/#{bits} ]>"
+      "#<CIDR [ #{self} ]>"
     end
 
     def netmask
@@ -86,6 +86,15 @@ module IPLogic
       @rest_field ||= ip - min
     end
     alias rest rest_field
+
+    def to_s
+      "#{ip}/#{bits}"
+    end
+    alias to_str to_s
+
+    def include?(ip)
+      CIDR.wrap(ip, bits).min == self.min
+    end
 
     def significant_octets
       4 - (bits / 8)
