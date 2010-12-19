@@ -67,6 +67,10 @@ module IPLogic
       @size ||= (1 << inv_bits)
     end
 
+    def include?(ip)
+      IP.wrap(ip).min(bits) == min
+    end
+
     def min
       @min ||= IP.wrap(
         (ip.to_i >> inv_bits) << inv_bits

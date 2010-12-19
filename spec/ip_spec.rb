@@ -218,5 +218,14 @@ describe IP do
       a.last.should == r.last
     end
 
+    it "tests inclusion" do
+      r = CIDR('11.22.33.44/24')
+      r.should respond_to :include?
+      r.should include '11.22.33.0'
+      r.should include IP('11.22.33.255')
+      r.should_not include IP('11.22.32.44').to_i
+      r.should_not include '11.22.34.44'
+    end
+
   end
 end
