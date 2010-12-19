@@ -41,6 +41,6 @@ Gem::Specification.new do |s|
     spec/radix_spec.rb
   )
 
-  s.add_development_dependency('rspec')
+  s.add_development_dependency('rspec', '~> 1.0')
 end
 
