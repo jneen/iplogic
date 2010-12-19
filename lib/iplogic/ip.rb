@@ -91,6 +91,10 @@ module IPLogic
       "#<IP [ #{self} ]>"
     end
 
+    def hash
+      self.to_s.hash
+    end
+
     def eql?(other)
       self.int == IP(other).int
     end
