@@ -9,10 +9,11 @@ Gem::Specification.new do |s|
   desc
 
   s.email = %q{jay@causes.com}
-  s.extra_rdoc_files = [
-    "LICENSE",
-     "README.md"
-  ]
+  s.extra_rdoc_files = %w(
+    LICENSE
+    README.md
+  )
+
   s.files = %w(
     Rakefile
     LICENSE
