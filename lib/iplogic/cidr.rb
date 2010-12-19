@@ -96,10 +96,6 @@ module IPLogic
     end
     alias to_str to_s
 
-    def include?(ip)
-      CIDR.wrap(ip, bits).min == self.min
-    end
-
     def significant_octets
       4 - (bits / 8)
     end
