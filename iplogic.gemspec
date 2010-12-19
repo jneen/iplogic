@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
 
   s.test_files = %w(
     spec/ip_spec.rb
+    spec/cidr_spec.rb
     spec/spec_helper.rb
     spec/radix_spec.rb
   )
