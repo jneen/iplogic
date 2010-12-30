@@ -109,6 +109,7 @@ module IPLogic
       IP(int + int_ish.to_i)
     end
 
+    # This allows IP "ranges" with (ip1..ip2)
     def succ
       self + 1
     end
