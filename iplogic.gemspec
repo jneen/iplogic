@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'iplogic'
-  s.version = '0.1.0'
+  s.version = '0.1.2'
 
   s.authors = ["Jay Adkisson"]
   s.date = '2010-11-13'
