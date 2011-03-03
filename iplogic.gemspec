@@ -10,6 +10,10 @@ Gem::Specification.new do |s|
     An IPv4 swiss-army chainsaw
   desc
 
+  s.summary = <<-sum
+    Because it's just a 32-bit integer.
+  sum
+
   s.email = %q{jay@causes.com}
   s.extra_rdoc_files = %w(
     LICENSE
@@ -31,10 +35,6 @@ Gem::Specification.new do |s|
   s.homepage = 'http://github.com/causes/iplogic'
   s.require_paths = ["lib"]
   s.rubygems_version = '1.3.7'
-
-  s.summary = <<-sum
-    Because it's just a 32-bit integer.
-  sum
 
   s.test_files = %w(
     spec/ip_spec.rb
