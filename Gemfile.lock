@@ -1,0 +1,15 @@
+PATH
+  remote: .
+  specs:
+    iplogic (0.1.0)
+
+GEM
+  specs:
+    rspec (1.3.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  iplogic!
+  rspec (~> 1.0)
