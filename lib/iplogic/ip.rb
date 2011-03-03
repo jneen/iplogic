@@ -96,7 +96,7 @@ module IPLogic
     end
 
     def eql?(other)
-      self.int == IP(other).int
+      self.int == IP.wrap(other).int
     end
     alias == eql?
 
@@ -106,7 +106,7 @@ module IPLogic
     end
 
     def +(int_ish)
-      IP(int + int_ish.to_i)
+      IP.wrap(int + int_ish.to_i)
     end
 
     # This allows IP "ranges" with (ip1..ip2)
