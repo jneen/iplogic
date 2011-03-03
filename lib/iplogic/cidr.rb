@@ -16,7 +16,11 @@ module IPLogic
           when IP
             netmask_to_bits(bits)
           else
-            bits.to_i
+            if bits.respond_to? :to_i
+              bits.to_i
+            else
+              format_error(args, bits)
+            end
           end
 
           new(ip, bits)
@@ -24,6 +28,8 @@ module IPLogic
           arg = args.first
           if arg =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\/(\d+)/
             new($1, $2)
+          else
+            format_error(arg)
           end
         end
       end
@@ -33,6 +39,12 @@ module IPLogic
         # but this works just fine.
         netmask.to_i.to_s(2) =~ /^(1*)0*$/
         $1.length
+      end
+
+      FormatError = Class.new(ArgumentError)
+      def format_error(*args)
+        args = args.map { |a| a.inspect }.join(', ')
+        raise FormatError, "CIDR: unable to parse #{args}"
       end
     end
 

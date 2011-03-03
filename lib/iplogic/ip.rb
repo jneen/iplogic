@@ -42,13 +42,13 @@ module IPLogic
         when nil
           0
         else
-          raise ArgumentError, <<-msg.strip
-            Couldn't parse #{arg.inspect} to an IP.
-          msg
+          raise FormatError, "IP: Unable to parse #{arg.inspect}"
         end
 
         return new(int)
       end
+
+      FormatError = Class.new(ArgumentError)
 
     private
       def parts_to_int(parts)
