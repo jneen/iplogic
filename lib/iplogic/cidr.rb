@@ -2,6 +2,7 @@ module IPLogic
   class CIDR
     include Enumerable
 
+    SHORTENED_IP_REGEX = /^(\d{1,3}(\.\d{1,3}){1,3})\/(\d+)$/
     class << self
       def wrap(*args)
         return args.first if args.first.is_a? CIDR
@@ -21,17 +22,36 @@ module IPLogic
             end
           end
 
-          new(ip, bits)
+          ip = parse_shortened_ip(ip) if ip.is_a? String
+
+          return new(ip, bits)
+
         elsif args.size == 1
           arg = args.first
-          if arg =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\/(\d+)/
-            new($1, $2)
+
+          # one argument means it's gotta be a string to parse
+          format_error(arg) unless arg.is_a? String
+
+          if arg =~ SHORTENED_IP_REGEX
+            new(parse_shortened_ip($1), $3)
+          elsif (parts = arg.split('/')).size == 2
+            ip = parse_shortened_ip(parts[0])
+            mask = IP.wrap(parts[1])
+            return new(ip, netmask_to_bits(mask))
           else
             format_error(arg)
           end
         end
       end
+
     private
+      # helper for formats like 11.22.33/24
+      # just adds some .0's to the end
+      def parse_shortened_ip(ip_str)
+        dots = ip_str.count('.')
+        IP.wrap(ip_str + '.0'*(3 - dots))
+      end
+
       def netmask_to_bits(netmask)
         raise FormatError, "CIDR: #{netmask} is not a netmask" unless netmask.netmask?
         # TODO: there's probably a clever mathy way to do this,

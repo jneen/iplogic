@@ -21,6 +21,30 @@ describe CIDR do
     r.inspect.should include '11.22.33.44/8'
   end
 
+  it "parses slash notation with a netmask" do
+    r = CIDR('11.22.33.44/255.255.255.0')
+    r.ip.should be_a IP
+    r.ip.to_s.should == '11.22.33.44'
+    r.bits.should == 24
+    r.netmask.should == '255.255.255.0'
+  end
+
+  it "parses shortened slash notation" do
+    r = CIDR('11.22.33/24')
+    r.ip.should be_a IP
+    r.ip.to_s.should == '11.22.33.0'
+    r.bits.should == 24
+    r.netmask.should == '255.255.255.0'
+  end
+
+  it "parses shortened slash notation with a netmask" do
+    r = CIDR('11.22/255.255.0.0')
+    r.ip.should be_a IP
+    r.ip.to_s.should == '11.22.0.0'
+    r.bits.should == 16
+    r.netmask.should == '255.255.0.0'
+  end
+
   it "knows its bits" do
     i = rand(33)
     CIDR("1.1.1.1/#{i}").bits.
