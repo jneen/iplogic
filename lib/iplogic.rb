@@ -1,5 +1,5 @@
 module IPLogic
-  VERSION = '0.1.3'
+  VERSION = '0.1.4'
 
   LIB = File.expand_path(File.dirname(__FILE__))
 end
