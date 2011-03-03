@@ -11,10 +11,8 @@ module IPLogic
           bits = case bits
           when Integer
             bits
-          when String
+          when String, IP
             netmask_to_bits(IP.wrap(bits))
-          when IP
-            netmask_to_bits(bits)
           else
             if bits.respond_to? :to_i
               bits.to_i
@@ -35,6 +33,7 @@ module IPLogic
       end
     private
       def netmask_to_bits(netmask)
+        raise FormatError, "CIDR: #{netmask} is not a netmask" unless netmask.netmask?
         # TODO: there's probably a clever mathy way to do this,
         # but this works just fine.
         netmask.to_i.to_s(2) =~ /^(1*)0*$/
