@@ -45,6 +45,13 @@ describe CIDR do
     r.netmask.should == '255.255.0.0'
   end
 
+  it "supports wrapping" do
+    r = CIDR('11.22.33.44/24')
+    wrapped = CIDR(r)
+    wrapped.should be_a CIDR
+    r.object_id.should == wrapped.object_id
+  end
+
   it "knows its bits" do
     i = rand(33)
     CIDR("1.1.1.1/#{i}").bits.

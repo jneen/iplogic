@@ -29,6 +29,8 @@ module IPLogic
         elsif args.size == 1
           arg = args.first
 
+          return arg if arg.is_a? CIDR
+
           # one argument means it's gotta be a string to parse
           format_error(arg) unless arg.is_a? String
 
