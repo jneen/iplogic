@@ -45,6 +45,10 @@ module IPLogic
           raise FormatError, "IP: Unable to parse #{arg.inspect}"
         end
 
+        unless (0..0xFFFFFFFF).include? int
+          raise FormatError, "IP: Address #{arg.inspect} out of range"
+        end
+
         return new(int)
       end
 
