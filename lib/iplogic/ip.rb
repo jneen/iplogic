@@ -54,6 +54,11 @@ module IPLogic
 
       FormatError = Class.new(ArgumentError)
 
+      # Return a random IP address.  Useful for mocks / tests
+      def rand
+        wrap(Kernel.rand(0x100000000))
+      end
+
     private
       def parts_to_int(parts)
         r = 0

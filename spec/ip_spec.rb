@@ -60,6 +60,10 @@ describe IP do
     IP.max.to_s.should == '255.255.255.255'
   end
 
+  it "fetches a random ip" do
+    IP.rand.should be_a IP
+  end
+
   it "is comparable" do
     IP.included_modules.should include Comparable
     IP.public_methods.should include '<=>'

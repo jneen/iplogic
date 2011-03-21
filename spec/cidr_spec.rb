@@ -52,6 +52,10 @@ describe CIDR do
     r.object_id.should == wrapped.object_id
   end
 
+  it "fetches a random CIDR" do
+    CIDR.rand.should be_a CIDR
+  end
+
   it "knows its bits" do
     i = rand(33)
     CIDR("1.1.1.1/#{i}").bits.

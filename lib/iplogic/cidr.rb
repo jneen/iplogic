@@ -76,6 +76,12 @@ module IPLogic
         end
       end
 
+      # @return a random CIDR
+      def rand
+        # both /32 and /0 are valid
+        wrap(IP.rand, Kernel.rand(33))
+      end
+
     private
       # helper for formats like 11.22.33/24
       # just adds some .0's to the end
