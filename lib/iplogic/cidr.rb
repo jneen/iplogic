@@ -66,9 +66,9 @@ module IPLogic
 
           if arg =~ SHORTENED_CIDR_REGEX
             new(parse_shortened_ip($1), $3)
-          elsif (parts = arg.split('/')).size == 2
-            ip = parse_shortened_ip(parts[0])
-            mask = IP.wrap(parts[1])
+          elsif (octets = arg.split('/')).size == 2
+            ip = parse_shortened_ip(octets[0])
+            mask = IP.wrap(octets[1])
             return new(ip, netmask_to_bits(mask))
           else
             format_error(arg)
@@ -207,7 +207,7 @@ module IPLogic
     #   CIDR('10.0.1/24').zone # => "1.0.10"
     # @return [String] the zone
     def zone
-      ip.parts[0..-(1+significant_octets)].reverse.join('.')
+      ip.octets[0..-(1+significant_octets)].reverse.join('.')
     end
 
     # Iterates over every address in the CIDR.

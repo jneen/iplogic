@@ -50,8 +50,8 @@ describe IP do
     IP('11.22.33.44').to_s.should == '11.22.33.44'
   end
 
-  it "knows its parts" do
-    IP('44.33.22.11').parts.should == [44, 33, 22, 11]
+  it "knows its octets" do
+    IP('44.33.22.11').octets.should == [44, 33, 22, 11]
   end
 
   it "knows the max" do

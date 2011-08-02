@@ -34,9 +34,9 @@ module IPLogic
 
         int = case arg
         when Array
-          parts_to_int(arg)
+          octets_to_int(arg)
         when String
-          parts_to_int(arg.split('.'))
+          octets_to_int(arg.split('.'))
         when Fixnum
           arg
         when nil
@@ -60,10 +60,10 @@ module IPLogic
       end
 
     private
-      def parts_to_int(parts)
+      def octets_to_int(octets)
         r = 0
-        parts.reverse.each_with_index do |part, i|
-          r += (part.to_i << 8*i)
+        octets.reverse.each_with_index do |octet, i|
+          r += (octet.to_i << 8*i)
         end
         r
       end
@@ -84,15 +84,16 @@ module IPLogic
       MAXIP
     end
 
-    def parts
-      @parts ||= begin
+    def octets
+      @octets ||= begin
         rad = int.radix(256)
         [0]*([4-rad.size,0].max) + rad
       end
     end
+    alias parts octets
 
     def to_s
-      parts.join('.')
+      octets.join('.')
     end
     alias to_str to_s
 
