@@ -1,1 +1,1 @@
-rvm ree@iplogic
+rvm rbx@iplogic --create

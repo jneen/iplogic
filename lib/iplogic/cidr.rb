@@ -76,6 +76,8 @@ module IPLogic
         end
       end
 
+      alias [] wrap
+
       # @return a random CIDR
       def rand
         # both /32 and /0 are valid
@@ -92,10 +94,21 @@ module IPLogic
 
       def netmask_to_bits(netmask)
         raise FormatError, "CIDR: #{netmask} is not a netmask" unless netmask.netmask?
-        # TODO: there's probably a clever mathy way to do this,
-        # but this works just fine.
-        netmask.to_i.to_s(2) =~ /^(1*)0*$/
-        $1.length
+
+        maxint32 = 0xFFFFFFFF
+        t = 1 + (maxint32 - netmask.to_i)
+
+        # netmask.to_i.to_s(2) =~ /^(1*)0*$/
+        # $1.length
+
+        # poor man's log_2
+        res = -1
+        while t > 0
+          res += 1
+          t >>= 1
+        end
+
+        32 - res
       end
 
       def format_error(*args)
@@ -218,13 +231,5 @@ module IPLogic
       (min..max).each(&blk)
       self
     end
-  end
-
-  # a convenience wrapper for CIDR.wrap.
-  # @see CIDR.wrap
-  def CIDR(*args)
-    return CIDR if args.empty?
-
-    CIDR.wrap(*args)
   end
 end

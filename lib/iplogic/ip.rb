@@ -52,6 +52,8 @@ module IPLogic
         return new(int)
       end
 
+      alias [] wrap
+
       FormatError = Class.new(ArgumentError)
 
       # Return a random IP address.  Useful for mocks / tests
@@ -74,7 +76,7 @@ module IPLogic
     alias to_i int
     alias to_int int
 
-    def initialize(int)
+    def initialize(int, extra={})
       @int = int
     end
 
@@ -95,7 +97,6 @@ module IPLogic
     def to_s
       octets.join('.')
     end
-    alias to_str to_s
 
     def inspect
       "#<IP [ #{self} ]>"
@@ -154,10 +155,5 @@ module IPLogic
         #{self.inspect} is not a valid netmask.
       msg
     end
-  end
-
-  def IP(*args)
-    return IP if args.empty?
-    IP.wrap(args.first)
   end
 end

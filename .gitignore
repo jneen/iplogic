@@ -1,5 +1,15 @@
+# vim
 .*.sw[a-z]
+
+# build products
 *.gem
+
+# docs
 doc/*
 .yardoc/*
+
+# bundler
 Gemfile.lock
+
+# compiled .rbc files from rubinius
+*.rbc
