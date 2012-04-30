@@ -5,7 +5,7 @@ Usage:
     require 'iplogic'
     include IPLogic
 
-    ip = IP('11.22.33.44')
-    cidr = CIDR('11.22.32.00/20')
+    ip = IP['11.22.33.44']
+    cidr = CIDR['11.22.32.00/20']
 
-Look in `spec/ip_spec.rb` and `spec/cidr_spec.rb` for a neat summary of al the methods available.
+Look in `spec/ip_spec.rb` and `spec/cidr_spec.rb` for a neat summary of all the methods available.
