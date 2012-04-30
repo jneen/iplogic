@@ -1,4 +1,4 @@
-require 'lib/iplogic'
+require './lib/iplogic'
 
 Gem::Specification.new do |s|
   s.name = 'iplogic'
