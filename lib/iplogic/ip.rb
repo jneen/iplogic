@@ -1,34 +1,34 @@
 module IPLogic
   class IP
     class << self
-      # Basic monad wrapper for IP addresses.
+      # Basic idempotent wrapper for creating addresses.
       #
-      # You can pass it:
+      # @param [String, Fixnum, Array, nil]
+      # @return [IP] the wrapped IP address
       #
-      # a String
-      # >> IP('11.22.33.44')
-      # => #<IP [ 11.22.33.44 ]>
+      # @example
+      #   >> IP['11.22.33.44']
+      #   => #<IP [ 11.22.33.44 ]>
       #
-      # an Integer
-      # >> IP(0xFFFFFFFF)
-      # => #<IP [ 255.255.255.255 ]>
+      # @example
+      #   >> IP[0xFFFFFFFF]
+      #   => #<IP [ 255.255.255.255 ]>
       #
-      # an Array of int-ish objects
-      # >> IP(['11', 22, 33, '44'])
-      # => #<IP [ 11.22.33.44 ]>
+      # @example
+      #   >> IP[nil]
+      #   =>  #<IP [ 0.0.0.0 ]>
       #
-      # nil
-      # >> IP(nil)
-      # =>  #<IP [ 0.0.0.0 ]>
+      # @example
+      #   >> IP(['11', 22, 33, '44'])
+      #   => #<IP [ 11.22.33.44 ]>
       #
-      # an IP
-      # >> ip = IP('11.22.33.44')
-      # => #<IP [ 11.22.33.44 ]>
-      # >> IP(ip)
-      # => #<IP [ 11.22.33.44 ]>
-      # >> ip.object_id == IP(ip).object_id
-      # => true
-      #   
+      # @example
+      #   >> ip = IP['11.22.33.44']
+      #   => #<IP [ 11.22.33.44 ]>
+      #   >> IP(ip)
+      #   => #<IP [ 11.22.33.44 ]>
+      #   >> ip.object_id == IP[ip].object_id
+      #   => true
       def wrap(arg)
         return arg if arg.is_a? IP
 
@@ -56,7 +56,7 @@ module IPLogic
 
       FormatError = Class.new(ArgumentError)
 
-      # Return a random IP address.  Useful for mocks / tests
+      # @return [IP] a random IP address.  Useful for mocks / tests
       def rand
         wrap(Kernel.rand(0x100000000))
       end
@@ -72,20 +72,29 @@ module IPLogic
     end
 
     # -*- instance methods -*-
+
+    # Get the integer representation of this IP address
+    # @return [Integer]
     attr_reader :int
     alias to_i int
+
+    # an IP can be used anywhere an integer can
     alias to_int int
 
     def initialize(int, extra={})
       @int = int
     end
 
-    # 255.255.255.255
-    MAXIP = self.new(0xFFFFFFFF)
+    MAXIP = IP.new(0xFFFFFFFF)
+    # @return [IP] The maximum IP address: 255.255.255.255
     def self.max
       MAXIP
     end
 
+    # @return [Array] an array of the four octets.
+    #
+    # @example
+    #   IP['1.2.3.4'].octets # => [1, 2, 3, 4]
     def octets
       @octets ||= begin
         rad = int.radix(256)
@@ -94,6 +103,7 @@ module IPLogic
     end
     alias parts octets
 
+    # @return [String] the usual string representation of the ip address.
     def to_s
       octets.join('.')
     end
@@ -102,6 +112,8 @@ module IPLogic
       "#<IP [ #{self} ]>"
     end
 
+    # an IP uses its string representation as its hash
+    # @return [String]
     def hash
       self.to_s.hash
     end
@@ -112,23 +124,35 @@ module IPLogic
     alias == eql?
 
     include Comparable
+    # IP addresses are ordered in the usual way
     def <=>(other)
       self.int <=> other.int
     end
 
+    # @param [#to_i] int_ish the amount to add
+    # @return [IP] the result of adding int_ish to the underlying integer
     def +(int_ish)
       IP.wrap(int + int_ish.to_i)
     end
 
-    # This allows IP "ranges" with (ip1..ip2)
-    def succ
-      self + 1
-    end
-
+    # @param [#to_i] int_ish the amount to subtract
+    # @return [IP] the result of subtracting int_ish from the underlying integer
     def -(int_ish)
       self + (-int_ish.to_i)
     end
 
+    # This allows IP "ranges" with (ip1..ip2)
+    # @return [IP]
+    def succ
+      self + 1
+    end
+
+    # given a netmask, returns the network prefix.
+    #
+    # @return [IP] the network prefix
+    #
+    # @example
+    #   IP['1.2.3.4'].prefix('255.255.0.0') # => #<IP [ 1.2.0.0 ]>
     def prefix(netmask)
       CIDR.wrap(self, netmask).min
     end
@@ -138,11 +162,19 @@ module IPLogic
       CIDR.wrap(self, netmask).max
     end
 
+    # given a netmask, returns the "rest field" - the bits
+    # not covered by the netmask.  See CIDR#rest_field.
+    #
+    #     IP['1.2.3.4'].rest_field # => #<IP [ 0.0.3.4 ]>
+    #
+    # @return [IP] the rest field
+    # @see CIDR#rest_field
     def rest_field(netmask)
       CIDR.wrap(self, netmask).rest_field
     end
     alias rest rest_field
 
+    # test if this IP address is a valid netmask.
     def netmask?
       maxint32 = 0xFFFFFFFF
       (0..32).any? do |i|
@@ -150,6 +182,7 @@ module IPLogic
       end
     end
 
+    # raises an error unless this IP address is a valid netmask.
     def assert_netmask!
       raise ArgumentError, <<-msg.strip unless netmask?
         #{self.inspect} is not a valid netmask.
