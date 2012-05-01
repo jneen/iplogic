@@ -1,11 +1,8 @@
 require 'rubygems'
-require 'rspec'
+require 'bundler'
+Bundler.require
 
-require File.expand_path(File.join(
-  File.dirname(__FILE__),
-  '..',
-  'lib',
-  'iplogic'
-))
+require 'wrong/adapters/rspec'
 
+require 'iplogic'
 include IPLogic
