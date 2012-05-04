@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version = IPLogic::VERSION
 
   s.authors = ["Jay Adkisson"]
-  s.date = '2010-11-13'
+  s.date = Date.today
   s.description = <<-desc.strip
     An IPv4 swiss-army chainsaw
   desc
@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
     Because it's just a 32-bit integer.
   sum
 
-  s.email = %q{jay@causes.com}
+  s.email = %q{jjmadkisson@gmail.com}
   s.extra_rdoc_files = %w(
     LICENSE
     README.md
@@ -32,9 +32,8 @@ Gem::Specification.new do |s|
     lib/iplogic/ip.rb
   )
 
-  s.homepage = 'http://github.com/causes/iplogic'
+  s.homepage = 'http://github.com/jayferd/iplogic'
   s.require_paths = ["lib"]
-  s.rubygems_version = '1.3.7'
 
   s.test_files = %w(
     spec/ip_spec.rb
