@@ -57,8 +57,10 @@ module IPLogic
       FormatError = Class.new(ArgumentError)
 
       # @return [IP] a random IP address.  Useful for mocks / tests
-      def rand
-        wrap(Kernel.rand(0x100000000))
+      # @param [CIDR] cidr an optional CIDR-like object to limit the IP to
+      def rand(cidr=CIDR.all)
+        cidr = CIDR.wrap(cidr)
+        cidr.min + Kernel.rand(cidr.size)
       end
 
     private
