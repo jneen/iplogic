@@ -2,8 +2,8 @@ source 'http://rubygems.org'
 gemspec
 
 # specs
-gem 'rspec', '~> 2.0'
-gem 'wrong'
+gem 'minitest'
+gem 'wrong', '~> 0.6.2'
 
 # docs
 gem 'yard'
