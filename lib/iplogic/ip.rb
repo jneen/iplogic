@@ -178,10 +178,10 @@ module IPLogic
 
     # test if this IP address is a valid netmask.
     def netmask?
-      maxint32 = 0xFFFFFFFF
-      (0..32).any? do |i|
-        (int-1) + (1 << i) == maxint32
-      end
+      inverse = 0xFFFFFFFF ^ int
+
+      # true if inverse+1 is a power of 2, which is the case we want
+      inverse & (inverse + 1) == 0
     end
 
     # raises an error unless this IP address is a valid netmask.
